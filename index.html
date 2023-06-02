@@ -1,0 +1,88 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>To-Do List</title>
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500&display=swap');
+
+        html {
+            background-color: #181818;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            user-select: none;
+        }
+        
+        h1 {
+            text-align: center;
+            color:rgb(0, 170, 255);
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 50px;
+        }
+
+        #contentBox {
+            /* text-align: center; */
+        }
+
+        .listL {
+            list-style: none;
+        }
+
+        main {
+            border: 3px solid rgb(255, 255, 255);
+            padding: 30px;
+            padding-bottom: 300px;
+            background-color: #323232;
+            color: #ffffff;
+        }
+    </style>
+
+    <h1>TO-DO LIST</h1>
+
+    <main role="main">
+        <div>
+            <input placeholder="What needs to be done?" id="inputV">
+            <button id="doneButton">Check!</button>
+
+        </div>
+        
+        <div id="contentBox">
+            <ul id="list">
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        const doneBtn = document.querySelector('#doneButton'); // Check! 버튼 불러오는거
+        const listLi = document.querySelector('#list'); // 어디 박스에 넣을지
+        const inputValue = document.querySelector('#inputV'); // 어떤거 입력하는지 받을거
+
+        doneBtn.addEventListener('click', () => { // Check! 버튼을 누르거나 엔터키 쳤을 때
+            if (inputValue.value) {  // 입력한 값이 있는가? (입력값 없는데 저장하면 안되니까) 
+                listLi.innerHTML += `<li class="listL"> <input type="checkbox" class="listB">` + inputValue.value + '</li>';
+                inputValue.value = '';
+            }
+
+            setInterval(() => {
+                const checked = document.querySelectorAll('.listB')
+                checked.forEach((a ,i) => {
+                    if (a.checked) {
+                        a.parentNode.style.textDecoration = 'line-through';
+                    } else {
+                        a.parentNode.style.textDecoration = 'none';
+                    }
+                })
+            }, 20);
+        });
+
+        doneBtn.addEventListener('keypress', (e) => { // Check! 버튼을 누르거나 엔터키 쳤을 때
+            if (inputValue.value && e.key === 'Enter') {  // 입력한 값이 있는가? (입력값 없는데 저장하면 안되니까) 
+                listLi.innerHTML += `<li class="listL"> <input type="checkbox" class="listB">` + inputValue.value + '</li>';
+                inputValue.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
